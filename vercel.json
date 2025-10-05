@@ -9,50 +9,17 @@
       "destination": "/index.html"
     }
   ],
+  "cleanUrls": true,
+  "trailingSlash": false,
   "headers": [
     {
       "source": "/(.*)",
       "headers": [
         {
-          "key": "X-Frame-Options",
-          "value": "SAMEORIGIN"
-        },
-        {
-          "key": "X-XSS-Protection",
-          "value": "1; mode=block"
-        },
-        {
-          "key": "X-Content-Type-Options",
-          "value": "nosniff"
-        },
-        {
-          "key": "Referrer-Policy",
-          "value": "strict-origin-when-cross-origin"
-        }
-      ]
-    },
-    {
-      "source": "/assets/(.*)",
-      "headers": [
-        {
           "key": "Cache-Control",
-          "value": "public, max-age=31536000, immutable"
-        }
-      ]
-    },
-    {
-      "source": "/(.*)\\.(?:js|css|jpg|jpeg|png|gif|webp|svg|woff|woff2|ttf|eot)",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=31536000, immutable"
+          "value": "public, max-age=0, must-revalidate"
         }
       ]
     }
-  ],
-  "env": {
-    "VITE_SHOPIFY_STORE_DOMAIN": "@vite_shopify_store_domain",
-    "VITE_SHOPIFY_PUBLIC_ACCESS_TOKEN": "@vite_shopify_public_access_token",
-    "VITE_USE_SHOPIFY_CHECKOUT": "@vite_use_shopify_checkout"
-  }
+  ]
 }
