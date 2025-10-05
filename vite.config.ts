@@ -17,4 +17,6 @@ export default defineConfig({
   optimizeDeps: {
     include: ["lucide-react"],
   },
+  // Ensure proper handling of SPA routes
+  appType: "spa",
 });

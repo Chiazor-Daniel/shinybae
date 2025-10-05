@@ -26,11 +26,6 @@ import { SEO_CONFIG } from "./config/seo";
 function AppContent() {
   const navigate = useNavigate();
   const location = useLocation();
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(() => {
-    // Restore selected product from sessionStorage on refresh
-    const stored = sessionStorage.getItem("selectedProduct");
-    return stored ? JSON.parse(stored) : null;
-  });
   const [useShopifyCheckout, setUseShopifyCheckout] = useState(
     import.meta.env.VITE_USE_SHOPIFY_CHECKOUT === "true" || true,
   );
@@ -57,6 +52,38 @@ function AppContent() {
     refetch,
   } = useShopifyProducts();
   const displayProducts = products;
+
+  // Selected product state - will be set from sessionStorage or products array
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+
+  // Restore selected product when products are loaded or on page refresh
+  React.useEffect(() => {
+    if (location.pathname === "/product" && displayProducts.length > 0) {
+      const stored = sessionStorage.getItem("selectedProduct");
+      if (stored) {
+        try {
+          const storedProduct = JSON.parse(stored);
+          // Find the product in the current products array to ensure it exists
+          const foundProduct = displayProducts.find(
+            (p) => p.id === storedProduct.id,
+          );
+          if (foundProduct) {
+            setSelectedProduct(foundProduct);
+          } else {
+            // Product not found, redirect to shop
+            sessionStorage.removeItem("selectedProduct");
+            navigate("/shop");
+          }
+        } catch (e) {
+          sessionStorage.removeItem("selectedProduct");
+          navigate("/shop");
+        }
+      } else if (!selectedProduct) {
+        // No stored product and no selected product, redirect to shop
+        navigate("/shop");
+      }
+    }
+  }, [location.pathname, displayProducts, navigate]);
 
   // Debug logging
   console.log("🔍 Debug Info:", {
