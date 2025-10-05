@@ -26,7 +26,7 @@ export const SEO_CONFIG = {
   // Site Information
   site: {
     name: "ShinyBae",
-    url: "https://yourdomain.com", // UPDATE THIS: Replace with your actual domain when deployed
+    url: "https://shinybae.vercel.app", // UPDATE THIS: Replace with your actual domain when deployed
     language: "en",
     locale: "en_US",
   },
