@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Shopify Product IDs</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+        }
+        .input-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        input:focus {
+            outline: none;
+            border-color: #007bff;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        .loading {
+            display: none;
+            margin: 20px 0;
+            padding: 15px;
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            border-radius: 6px;
+            color: #856404;
+        }
+        .error {
+            display: none;
+            margin: 20px 0;
+            padding: 15px;
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            border-radius: 6px;
+            color: #721c24;
+        }
+        .results {
+            display: none;
+            margin-top: 30px;
+        }
+        .product-card {
+            background: #f8f9fa;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #007bff;
+        }
+        .product-name {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+        .variant {
+            padding: 8px 12px;
+            background: white;
+            margin: 5px 0;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .variant-name {
+            color: #666;
+            flex: 1;
+        }
+        .variant-id {
+            color: #007bff;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+        .copy-btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 11px;
+            margin-left: 10px;
+        }
+        .copy-btn:hover {
+            background: #218838;
+        }
+        .instructions {
+            background: #e7f3ff;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border-left: 4px solid #007bff;
+        }
+        .instructions h3 {
+            margin-top: 0;
+            color: #0056b3;
+        }
+        .instructions ol {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        .instructions li {
+            margin: 8px 0;
+            line-height: 1.6;
+        }
+        code {
+            background: #f8f9fa;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #d63384;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🛍️ Get Shopify Product</h1> Variant IDs</h1>
+        <p class="subtitle">Fetch all product variant IDs from your Shopify store</p>
+
+        <div class="instructions">
+            <h3>📝 Instructions:</h3>
+            <ol>
+                <li>Enter your Shopify store domain (e.g., <code>your-store.myshopify.com</code>)</li>
+                <li>Enter your Storefront API access token (starts with <code>shpat_</code>)</li>
+                <li>Click "Fetch Products" to get all variant IDs</li>
+                <li>Copy the variant IDs and update your <code>src/data/products.ts</code> file</li>
+            </ol>
+        </div>
+
+        <div class="input-group">
+            <label for="storeDomain">Store Domain</label>
+            <input
+                type="text"
+                id="storeDomain"
+                placeholder="your-store.myshopify.com"
+                value="dzfymv-7p.myshopify.com"
+            >
+        </div>
+
+        <div class="input-group">
+            <label for="accessToken">Storefront API Access Token</label>
+            <input
+                type="text"
+                id="accessToken"
+                placeholder="shpat_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+                value="002313521393af1cbd1de0a61064fcc2"
+            >
+        </div>
+
+        <button onclick="fetchProducts()">Fetch Products</button>
+
+        <div class="loading" id="loading">
+            ⏳ Fetching products from Shopify...
+        </div>
+
+        <div class="error" id="error"></div>
+
+        <div class="results" id="results">
+            <h2>✅ Products Found</h2>
+            <div id="productList"></div>
+        </div>
+    </div>
+
+    <script>
+        async function fetchProducts() {
+            const storeDomain = document.getElementById('storeDomain').value.trim();
+            const accessToken = document.getElementById('accessToken').value.trim();
+
+            const loading = document.getElementById('loading');
+            const error = document.getElementById('error');
+            const results = document.getElementById('results');
+            const productList = document.getElementById('productList');
+
+            // Reset
+            loading.style.display = 'none';
+            error.style.display = 'none';
+            results.style.display = 'none';
+            productList.innerHTML = '';
+
+            if (!storeDomain || !accessToken) {
+                error.textContent = '❌ Please fill in both store domain and access token';
+                error.style.display = 'block';
+                return;
+            }
+
+            loading.style.display = 'block';
+
+            try {
+                const cleanDomain = storeDomain.replace(/^https?:\/\//, '').replace(/\/$/, '');
+                const apiUrl = `https://${cleanDomain}/api/2024-01/graphql.json`;
+
+                const query = `
+                {
+                    products(first: 50) {
+                        edges {
+                            node {
+                                id
+                                title
+                                handle
+                                variants(first: 50) {
+                                    edges {
+                                        node {
+                                            id
+                                            title
+                                            sku
+                                            price
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                `;
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Shopify-Storefront-Access-Token': accessToken
+                    },
+                    body: JSON.stringify({ query })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+
+                const data = await response.json();
+
+                if (data.errors) {
+                    throw new Error(data.errors[0].message);
+                }
+
+                const products = data.data.products.edges;
+
+                if (products.length === 0) {
+                    error.textContent = '⚠️ No products found in your store. Add some products first!';
+                    error.style.display = 'block';
+                    loading.style.display = 'none';
+                    return;
+                }
+
+                // Display products
+                products.forEach(({ node: product }) => {
+                    const productCard = document.createElement('div');
+                    productCard.className = 'product-card';
+
+                    const productName = document.createElement('div');
+                    productName.className = 'product-name';
+                    productName.textContent = product.title;
+                    productCard.appendChild(productName);
+
+                    product.variants.edges.forEach(({ node: variant }) => {
+                        // Extract numeric ID from GraphQL ID (e.g., "gid://shopify/ProductVariant/43234567890")
+                        const numericId = variant.id.split('/').pop();
+
+                        const variantDiv = document.createElement('div');
+                        variantDiv.className = 'variant';
+
+                        const variantInfo = document.createElement('div');
+                        variantInfo.style.flex = '1';
+
+                        const variantName = document.createElement('span');
+                        variantName.className = 'variant-name';
+                        variantName.textContent = variant.title === 'Default Title' ? 'Default' : variant.title;
+                        variantInfo.appendChild(variantName);
+
+                        if (variant.sku) {
+                            const sku = document.createElement('span');
+                            sku.style.color = '#999';
+                            sku.style.fontSize = '11px';
+                            sku.style.marginLeft = '10px';
+                            sku.textContent = `SKU: ${variant.sku}`;
+                            variantInfo.appendChild(sku);
+                        }
+
+                        variantDiv.appendChild(variantInfo);
+
+                        const variantId = document.createElement('span');
+                        variantId.className = 'variant-id';
+                        variantId.textContent = numericId;
+                        variantDiv.appendChild(variantId);
+
+                        const copyBtn = document.createElement('button');
+                        copyBtn.className = 'copy-btn';
+                        copyBtn.textContent = 'Copy';
+                        copyBtn.onclick = () => {
+                            navigator.clipboard.writeText(numericId);
+                            copyBtn.textContent = '✓ Copied!';
+                            setTimeout(() => copyBtn.textContent = 'Copy', 2000);
+                        };
+                        variantDiv.appendChild(copyBtn);
+
+                        productCard.appendChild(variantDiv);
+                    });
+
+                    productList.appendChild(productCard);
+                });
+
+                loading.style.display = 'none';
+                results.style.display = 'block';
+
+            } catch (err) {
+                loading.style.display = 'none';
+                error.textContent = `❌ Error: ${err.message}`;
+                error.style.display = 'block';
+                console.error('Full error:', err);
+            }
+        }
+    </script>
+</body>
+</html>
