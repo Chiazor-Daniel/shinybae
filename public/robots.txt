@@ -1,0 +1,42 @@
+# robots.txt for ShinyBae Cosmetics
+
+# Allow all search engines to crawl the entire site
+User-agent: *
+Allow: /
+
+# Disallow checkout and admin pages (Shopify handles these)
+Disallow: /checkout
+Disallow: /cart
+Disallow: /admin
+
+# Allow crawling of images
+Allow: /*.jpg$
+Allow: /*.jpeg$
+Allow: /*.png$
+Allow: /*.webp$
+Allow: /*.svg$
+
+# Sitemap location (update with your actual domain)
+Sitemap: https://yourdomain.com/sitemap.xml
+
+# Crawl delay (optional - helps prevent server overload)
+# Crawl-delay: 1
+
+# Specific bot rules
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: facebookexternalbot
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: Pinterest
+Allow: /
