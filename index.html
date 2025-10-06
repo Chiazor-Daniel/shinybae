@@ -14,7 +14,7 @@
         </title>
         <meta
             name="description"
-            content="Discover ShinyBae's collection of handcrafted, cruelty-free lip glosses. Moisturizing formulas that shine and empower. Free shipping on orders over $50."
+            content="Discover ShinyBae's collection of handcrafted, cruelty-free lip glosses. Moisturizing formulas that shine and empower. Free shipping on orders over $70."
         />
         <meta
             name="keywords"
@@ -82,5 +82,24 @@
         <shopify-cart id="shopify-cart"></shopify-cart>
         <div id="root"></div>
         <script type="module" src="/src/main.tsx"></script>
+        <script>
+            if ("serviceWorker" in navigator) {
+                window.addEventListener("load", () => {
+                    navigator.serviceWorker
+                        .register("/sw.js")
+                        .then((registration) => {
+                            console.log(
+                                "ServiceWorker registration successful",
+                            );
+                        })
+                        .catch((err) => {
+                            console.log(
+                                "ServiceWorker registration failed: ",
+                                err,
+                            );
+                        });
+                });
+            }
+        </script>
     </body>
 </html>

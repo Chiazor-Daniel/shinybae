@@ -178,7 +178,7 @@ const TermsConditions: React.FC<TermsConditionsProps> = ({ onBack }) => {
               </p>
               <p className="font-semibold">Free Shipping:</p>
               <p>
-                Free standard shipping is available on orders over $50 within
+                Free standard shipping is available on orders over $70 within
                 the continental United States.
               </p>
             </div>
