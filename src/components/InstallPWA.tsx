@@ -13,13 +13,16 @@ declare global {
 }
 
 const InstallPWA: React.FC = () => {
-  const [installPrompt, setInstallPrompt] = useState<BeforeInstallPromptEvent | null>(null);
+  const [installPrompt, setInstallPrompt] =
+    useState<BeforeInstallPromptEvent | null>(null);
   const [isInstallable, setIsInstallable] = useState(false);
   const [isIOS, setIsIOS] = useState(false);
+  const [isDismissed, setIsDismissed] = useState(false);
 
   useEffect(() => {
     // Check if it's iOS
-    const isIOSDevice = /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream;
+    const isIOSDevice =
+      /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream;
     setIsIOS(isIOSDevice);
 
     // Listen for the beforeinstallprompt event
@@ -57,11 +60,18 @@ const InstallPWA: React.FC = () => {
     }
   };
 
-  if (!isInstallable && !isIOS) return null;
+  if ((!isInstallable && !isIOS) || isDismissed) return null;
 
   return (
     <div className="fixed bottom-4 left-4 right-4 z-50 bg-white rounded-lg shadow-lg p-4 border border-rose-100">
-      <div className="flex items-center justify-between">
+      <button
+        onClick={() => setIsDismissed(true)}
+        className="absolute top-2 right-2 text-gray-400 hover:text-gray-600 transition-colors duration-200"
+        aria-label="Close install prompt"
+      >
+        ✕
+      </button>
+      <div className="flex items-center justify-between pr-6">
         <div className="flex-1 mr-4">
           <p className="text-gray-800 font-medium">
             {isIOS
