@@ -212,7 +212,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
                 <p className="text-sm font-medium text-gray-900">
                   Free Shipping
                 </p>
-                <p className="text-xs text-gray-600">On orders over $35</p>
+                <p className="text-xs text-gray-600">On orders over $70</p>
               </div>
               <div className="text-center">
                 <Shield className="mx-auto mb-2 text-rose-500" size={24} />

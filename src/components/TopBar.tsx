@@ -18,7 +18,7 @@ const TopBar: React.FC = () => {
   const promos = [
     {
       icon: <Truck size={14} />,
-      text: "Free shipping on orders over $50",
+      text: "Free shipping on orders over $70",
       highlight: true,
     },
     {

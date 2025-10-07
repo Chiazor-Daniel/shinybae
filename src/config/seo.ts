@@ -9,7 +9,7 @@ export const SEO_CONFIG = {
   // Default Meta Tags
   title: "ShinyBae - Premium Handcrafted Lip Glosses | Cruelty-Free Cosmetics",
   description:
-    "Discover ShinyBae's collection of handcrafted, cruelty-free lip glosses. Moisturizing formulas that shine and empower. Free shipping on orders over $50.",
+    "Discover ShinyBae's collection of handcrafted, cruelty-free lip glosses. Moisturizing formulas that shine and empower. Free shipping on orders over $70.",
   keywords: [
     "lip gloss",
     "handcrafted cosmetics",
@@ -119,7 +119,7 @@ export const SEO_CONFIG = {
     home: {
       title: "ShinyBae - Premium Handcrafted Lip Glosses | Cruelty-Free",
       description:
-        "Discover our collection of handcrafted, moisturizing lip glosses. Cruelty-free, vegan, and made with love. Free shipping on orders over $50.",
+        "Discover our collection of handcrafted, moisturizing lip glosses. Cruelty-free, vegan, and made with love. Free shipping on orders over $70.",
     },
     shop: {
       title: "Shop Lip Glosses | ShinyBae Collection",
