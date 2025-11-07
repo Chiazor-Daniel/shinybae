@@ -11,11 +11,11 @@ Open this file: **`src/config/site.ts`**
 ### 1️⃣ Contact Emails
 ```typescript
 emails: {
-  general: "hello@shinybae.com",      // Main contact email
-  privacy: "privacy@shinybae.com",    // Privacy inquiries
-  legal: "legal@shinybae.com",        // Legal questions
-  returns: "returns@shinybae.com",    // Return requests
-  support: "support@shinybae.com",    // Customer support
+  general: "sales@shinybae.com",      // Main contact email
+  privacy: "sales@shinybae.com",      // Privacy inquiries
+  legal: "sales@shinybae.com",        // Legal questions
+  returns: "sales@shinybae.com",      // Return requests
+  support: "sales@shinybae.com",      // Customer support
 }
 ```
 

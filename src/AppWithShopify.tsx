@@ -14,6 +14,7 @@ import Checkout from "./components/Checkout";
 import OrderConfirmation from "./components/OrderConfirmation";
 import PrivacyPolicy from "./components/PrivacyPolicy";
 import TermsConditions from "./components/TermsConditions";
+import Contact from "./components/Contact";
 import SEO from "./components/SEO";
 import InstallPWA from "./components/InstallPWA";
 
@@ -142,6 +143,7 @@ function AppContent() {
     if (path === "/") return "home";
     if (path === "/shop") return "shop";
     if (path === "/about") return "about";
+    if (path === "/contact") return "contact";
     if (path === "/product") return "product";
     if (path === "/checkout") return "checkout";
     if (path === "/confirmation") return "confirmation";
@@ -357,6 +359,19 @@ function AppContent() {
                 url={`${SEO_CONFIG.site.url}/about`}
               />
               <BrandStory />
+            </>
+          }
+        />
+        <Route
+          path="/contact"
+          element={
+            <>
+              <SEO
+                title={SEO_CONFIG.pages.contact.title}
+                description={SEO_CONFIG.pages.contact.description}
+                url={`${SEO_CONFIG.site.url}/contact`}
+              />
+              <Contact />
             </>
           }
         />
