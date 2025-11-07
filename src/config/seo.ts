@@ -9,7 +9,7 @@ export const SEO_CONFIG = {
   // Default Meta Tags
   title: "ShinyBae - Premium Handcrafted Lip Glosses | Cruelty-Free Cosmetics",
   description:
-    "Discover ShinyBae's collection of handcrafted, cruelty-free lip glosses. Moisturizing formulas that shine and empower. Free shipping on orders over $50.",
+    "Discover ShinyBae's collection of handcrafted, cruelty-free lip glosses. Moisturizing formulas that shine and empower. Free shipping on orders over $70.",
   keywords: [
     "lip gloss",
     "handcrafted cosmetics",
@@ -65,7 +65,7 @@ export const SEO_CONFIG = {
     image: "https://yourdomain.com/og-image.jpg",
     priceRange: "$$",
     telephone: "+1-555-123-4567", // UPDATE: Your phone number
-    email: "hello@shinybae.com",
+    email: "sales@shinybae.com",
     address: {
       "@type": "PostalAddress",
       streetAddress: "123 Beauty Street", // UPDATE: Your address
@@ -119,7 +119,7 @@ export const SEO_CONFIG = {
     home: {
       title: "ShinyBae - Premium Handcrafted Lip Glosses | Cruelty-Free",
       description:
-        "Discover our collection of handcrafted, moisturizing lip glosses. Cruelty-free, vegan, and made with love. Free shipping on orders over $50.",
+        "Discover our collection of handcrafted, moisturizing lip glosses. Cruelty-free, vegan, and made with love. Free shipping on orders over $70.",
     },
     shop: {
       title: "Shop Lip Glosses | ShinyBae Collection",
@@ -140,6 +140,11 @@ export const SEO_CONFIG = {
       title: "Terms & Conditions | ShinyBae",
       description:
         "Review ShinyBae's terms and conditions for using our website and purchasing our products.",
+    },
+    contact: {
+      title: "Contact Us | ShinyBae - Get in Touch",
+      description:
+        "Have a question or feedback? Contact ShinyBae today. We're here to help and would love to hear from you!",
     },
   },
 } as const;

@@ -14,7 +14,9 @@ import Checkout from "./components/Checkout";
 import OrderConfirmation from "./components/OrderConfirmation";
 import PrivacyPolicy from "./components/PrivacyPolicy";
 import TermsConditions from "./components/TermsConditions";
+import Contact from "./components/Contact";
 import SEO from "./components/SEO";
+import InstallPWA from "./components/InstallPWA";
 
 import { useCart } from "./hooks/useCart";
 import { ShopifyProvider, useShopify } from "./shopify/ShopifyProvider";
@@ -141,6 +143,7 @@ function AppContent() {
     if (path === "/") return "home";
     if (path === "/shop") return "shop";
     if (path === "/about") return "about";
+    if (path === "/contact") return "contact";
     if (path === "/product") return "product";
     if (path === "/checkout") return "checkout";
     if (path === "/confirmation") return "confirmation";
@@ -149,44 +152,7 @@ function AppContent() {
     return "home";
   };
 
-  // Show error state with retry button if products failed to load
-  if (error && displayProducts.length === 0) {
-    return (
-      <div className="min-h-screen bg-gradient-to-b from-rose-50 to-white">
-        <TopBar />
-        <Header
-          cartCount={getCartCount()}
-          onCartClick={() => setIsCartOpen(true)}
-          onPageChange={(page) => navigate(page === "home" ? "/" : `/${page}`)}
-          currentPage={getCurrentPage()}
-        />
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-rose-50 to-white">
-          <div className="text-center p-8 max-w-md">
-            <div className="mb-6">
-              <div className="text-6xl mb-4">😕</div>
-              <h2 className="text-2xl font-playfair font-bold text-gray-900 mb-2">
-                Unable to Load Products
-              </h2>
-              <p className="text-gray-600 mb-6">
-                We couldn't fetch products from Shopify. Please check your
-                connection and try again.
-              </p>
-              <p className="text-sm text-red-600 bg-red-50 p-3 rounded-lg mb-6">
-                {error}
-              </p>
-            </div>
-            <button
-              onClick={() => refetch()}
-              className="btn-primary px-8 py-3 flex items-center justify-center mx-auto"
-            >
-              <RefreshCw className="mr-2" size={18} />
-              Retry Loading Products
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  // Remove global error handler
 
   // Show loading state
   if (productsLoading) {
@@ -218,6 +184,7 @@ function AppContent() {
 
   return (
     <div className="min-h-screen bg-white">
+      <InstallPWA />
       <TopBar />
       <Header
         cartCount={getCartCount()}
@@ -240,7 +207,22 @@ function AppContent() {
               />
               <Hero onShopClick={() => navigate("/shop")} />
               <BrandStory />
-              {displayProducts.length > 0 ? (
+              {error ? (
+                <div className="py-20 text-center">
+                  <div className="mb-6">
+                    <p className="text-gray-500 text-lg mb-4">
+                      No products available
+                    </p>
+                    <button
+                      onClick={() => refetch()}
+                      className="btn-primary px-6 py-2 text-sm"
+                    >
+                      <RefreshCw className="mr-2 inline-block" size={16} />
+                      Try Again
+                    </button>
+                  </div>
+                </div>
+              ) : displayProducts.length > 0 ? (
                 <FeaturedProducts
                   products={displayProducts}
                   onAddToCart={handleAddToCart}
@@ -260,38 +242,53 @@ function AppContent() {
         <Route
           path="/shop"
           element={
-            displayProducts.length > 0 ? (
-              <>
-                <SEO
-                  title={SEO_CONFIG.pages.shop.title}
-                  description={SEO_CONFIG.pages.shop.description}
-                  url={`${SEO_CONFIG.site.url}/shop`}
-                />
+            <>
+              <SEO
+                title={SEO_CONFIG.pages.shop.title}
+                description={SEO_CONFIG.pages.shop.description}
+                url={`${SEO_CONFIG.site.url}/shop`}
+              />
+              {error ? (
+                <div className="min-h-screen flex items-center justify-center bg-white">
+                  <div className="text-center p-8">
+                    <h2 className="text-2xl font-playfair font-bold text-gray-900 mb-4">
+                      No Products Available
+                    </h2>
+                    <button
+                      onClick={() => refetch()}
+                      className="btn-primary px-6 py-3"
+                    >
+                      <RefreshCw className="mr-2 inline-block" size={18} />
+                      Try Again
+                    </button>
+                  </div>
+                </div>
+              ) : displayProducts.length > 0 ? (
                 <ProductGrid
                   products={displayProducts}
                   onAddToCart={handleAddToCart}
                   onProductClick={handleProductClick}
                 />
-              </>
-            ) : (
-              <div className="min-h-screen flex items-center justify-center bg-white">
-                <div className="text-center p-8">
-                  <h2 className="text-2xl font-playfair font-bold text-gray-900 mb-4">
-                    No Products Available
-                  </h2>
-                  <p className="text-gray-600 mb-6">
-                    We're currently updating our collection. Please check back
-                    soon!
-                  </p>
-                  <button
-                    onClick={() => navigate("/")}
-                    className="btn-primary px-6 py-3"
-                  >
-                    Back to Home
-                  </button>
+              ) : (
+                <div className="min-h-screen flex items-center justify-center bg-white">
+                  <div className="text-center p-8">
+                    <h2 className="text-2xl font-playfair font-bold text-gray-900 mb-4">
+                      No Products Available
+                    </h2>
+                    <p className="text-gray-600 mb-6">
+                      We're currently updating our collection. Please check back
+                      soon!
+                    </p>
+                    <button
+                      onClick={() => navigate("/")}
+                      className="btn-primary px-6 py-3"
+                    >
+                      Back to Home
+                    </button>
+                  </div>
                 </div>
-              </div>
-            )
+              )}
+            </>
           }
         />
         <Route
@@ -362,6 +359,19 @@ function AppContent() {
                 url={`${SEO_CONFIG.site.url}/about`}
               />
               <BrandStory />
+            </>
+          }
+        />
+        <Route
+          path="/contact"
+          element={
+            <>
+              <SEO
+                title={SEO_CONFIG.pages.contact.title}
+                description={SEO_CONFIG.pages.contact.description}
+                url={`${SEO_CONFIG.site.url}/contact`}
+              />
+              <Contact />
             </>
           }
         />

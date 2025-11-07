@@ -8,11 +8,11 @@
 export const SITE_CONFIG = {
   // Contact Emails
   emails: {
-    general: "info@shinybae.com",
-    privacy: "privacy@shinybae.com",
-    legal: "legal@shinybae.com",
-    returns: "returns@shinybae.com",
-    support: "support@shinybae.com",
+    general: "sales@shinybae.com",
+    privacy: "sales@shinybae.com",
+    legal: "sales@shinybae.com",
+    returns: "sales@shinybae.com",
+    support: "orolabisola@gmail.com",
   },
 
   // Social Media Links

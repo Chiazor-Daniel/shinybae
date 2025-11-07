@@ -165,7 +165,7 @@ const Cart: React.FC<CartProps> = ({
                 Checkout
               </button>
               <p className="text-center text-sm text-gray-500 mt-3">
-                Free shipping on orders over $35 🚚
+                Free shipping on orders over $70 🚚
               </p>
             </div>
           )}

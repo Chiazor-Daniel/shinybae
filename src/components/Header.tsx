@@ -27,6 +27,7 @@ const Header: React.FC<HeaderProps> = ({
     { id: "home", label: "Home" },
     { id: "shop", label: "Shop" },
     { id: "about", label: "About" },
+    { id: "contact", label: "Contact" },
   ];
 
   const handleMobileMenuToggle = () => {
